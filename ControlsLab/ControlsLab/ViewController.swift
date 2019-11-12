@@ -2,6 +2,7 @@ import UIKit
 
 class ViewController: UIViewController {
 
+    @IBOutlet weak var cardNumber: UILabel!
     
     @IBOutlet weak var selectSuite: UISegmentedControl!
     
@@ -13,15 +14,15 @@ class ViewController: UIViewController {
         didSet {
             switch selectSuite.selectedSegmentIndex {
             case 0 :
-                cardPicture.image = #imageLiteral(resourceName: "ace of diamonds")
+                cardPicture.image = UIImage(systemName: "suit.diamond.fill")
             case 1 :
-                cardPicture.image = #imageLiteral(resourceName: "ace of hearts")
+                cardPicture.image = UIImage(systemName: "suit.heart.fill")
             case 2 :
-                cardPicture.image = #imageLiteral(resourceName: "aceofclubs")
+                cardPicture.image = UIImage(systemName: "suit.club.fill")
             case 3 :
-                cardPicture.image = #imageLiteral(resourceName: "aceofspades")
+                cardPicture.image = UIImage(systemName: "suit.spade.fill")
             default :
-                cardPicture.image = #imageLiteral(resourceName: "ace of diamonds")
+                cardPicture.image = UIImage(systemName: "suit.diamond.fill")
             }
         }
     }
@@ -30,37 +31,17 @@ class ViewController: UIViewController {
         didSet {
             switch stepper.value {
             case 1.0 :
-                if selectedSuit == 0 {
-                    cardPicture.image = #imageLiteral(resourceName: "ace of diamonds")
-                } else if selectedSuit == 1 {
-                    cardPicture.image = #imageLiteral(resourceName: "ace of hearts")
-                } else if selectedSuit == 2 {
-                    cardPicture.image = #imageLiteral(resourceName: "aceofclubs")
-                } else if selectedSuit == 3 {
-                    cardPicture.image = #imageLiteral(resourceName: "aceofspades")
-                }
-            case 2.0 :
-                if selectedSuit == 0 {
-                    cardPicture.image = #imageLiteral(resourceName: "2diamonds")
-                } else if selectedSuit == 1 {
-                    cardPicture.image = #imageLiteral(resourceName: "2hearts")
-                } else if selectedSuit == 2 {
-                    cardPicture.image = #imageLiteral(resourceName: "2clubs")
-                } else if selectedSuit == 3 {
-                    cardPicture.image = #imageLiteral(resourceName: "2spades")
-                }
-            case 3.0 :
-                if selectedSuit == 0 {
-                    cardPicture.image = #imageLiteral(resourceName: "3diamons")
-                } else if selectedSuit == 1 {
-                    cardPicture.image = #imageLiteral(resourceName: "3hearts")
-                } else if selectedSuit == 2 {
-                    cardPicture.image = #imageLiteral(resourceName: "3clubs")
-                } else if selectedSuit == 3 {
-                    cardPicture.image = #imageLiteral(resourceName: "3spades")
-                }
+                cardNumber.text = "A"
+            case 2.0...10.0 :
+                cardNumber.text = "\(Int(stepper.value))"
+            case 11.0 :
+                cardNumber.text = "J"
+            case 12.0 :
+                cardNumber.text = "Q"
+            case 13.0 :
+                cardNumber.text = "K"
             default :
-                cardPicture.image = #imageLiteral(resourceName: "ace of diamonds")
+                cardNumber.text = "A"
             }
         }
     }
@@ -68,12 +49,13 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         stepperValues()
-        
+        cardPicture.image = UIImage(systemName: "suit.diamond.fill")
+        cardNumber.text = "A"
     }
     
     func stepperValues() {
         stepper.minimumValue = 1.0
-        stepper.maximumValue = 3.0
+        stepper.maximumValue = 13.0
         stepper.stepValue = 1.0
         stepper.value = 1.0
     }
